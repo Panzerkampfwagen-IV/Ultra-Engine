@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #login-container {
+            width: 300px;
+            margin: auto;
+            margin-top: 100px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container">
+        <h2>Sign In</h2>
+        <div class="error-message" id="error-message"></div>
+        <form id="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="button" onclick="validateSignIn()">Sign In</button>
+        </form>
+        <p>Don't have an account? <a href="free.html">Continue for free</a>.</p>
+    </div>
+
+    <script>
+        function validateSignIn() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Get the registered users from local storage
+            var registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+            // Check if the username and password are valid (exist in the registeredUsers array)
+            const user = registeredUsers.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                // Store the username in a variable called "name"
+                const name = username;
+                alert(`Welcome, ${name}! You are now logged in.`);
+
+                // Redirect to home.html
+                window.location.href = 'home.html';
+            } else {
+                // Display error message
+                document.getElementById('error-message').innerText = 'Incorrect username or password.';
+            }
+        }
+    </script>
+</body>
+</html>
+
