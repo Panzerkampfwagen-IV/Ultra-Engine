@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern UI with Dropdown Menus and Sign In</title>
+<title>Modern UI with Iframe Toggling</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -24,40 +24,10 @@
     width: 400px;
   }
 
-  .dropdown {
-    margin-bottom: 15px;
-  }
-
-  .dropdown label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-
-  .dropdown select {
+  .big-button {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    font-size: 16px;
-    appearance: none; /* Remove default arrow on Firefox */
-    -webkit-appearance: none; /* Remove default arrow on Chrome/Safari */
-  }
-
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  button {
-    width: 100%;
-    padding: 10px;
+    height: 60px;
+    margin-bottom: 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -66,65 +36,72 @@
     font-size: 16px;
   }
 
-  button:hover {
+  .big-button:hover {
     background-color: #0056b3;
   }
 
-  .error-message {
-    color: red;
-    margin-bottom: 10px;
+  .iframe-container {
+    display: none;
+  }
+
+  .iframe-container.active {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 140px); /* Adjusted for button height and margin */
+    overflow: auto;
   }
 </style>
 </head>
 <body>
 <div class="container">
-  <h2>Modern UI with Dropdown Menus and Sign In</h2>
-  <form id="login-form">
-    <div class="dropdown">
-      <label for="dropdown1">Dropdown 1</label>
-      <select id="dropdown1">
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
-      </select>
-    </div>
-    <!-- Repeat for 14 more dropdowns -->
+  <h2>Modern UI with Iframe Toggling</h2>
+  
+  <button id="toggleButton1" class="big-button">Open/Close Abyss</button>
+  <div id="iframeContainer1" class="iframe-container"></div>
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+  <button id="toggleButton2" class="big-button">Open/Close Interstellar</button>
+  <div id="iframeContainer2" class="iframe-container"></div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+  <button id="toggleButton3" class="big-button">Open/Close Rammerhead</button>
+  <div id="iframeContainer3" class="iframe-container"></div>
 
-    <button type="button" onclick="validateSignIn()">Sign In</button>
+  <button id="toggleButton4" class="big-button">Open/Close Interstellar 2</button>
+  <div id="iframeContainer4" class="iframe-container"></div>
 
-    <div class="error-message" id="error-message"></div>
-  </form>
+  <button id="toggleButton5" class="big-button">Open/Close Interstellar 3</button>
+  <div id="iframeContainer5" class="iframe-container"></div>
+
+  <button id="toggleButton6" class="big-button">Open/Close Interstellar 4</button>
+  <div id="iframeContainer6" class="iframe-container"></div>
 </div>
 
 <script>
-  function validateSignIn() {
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+  function toggleIframe(buttonId, containerId) {
+    const toggleButton = document.getElementById(buttonId);
+    const iframeContainer = document.getElementById(containerId);
+    let iframeVisible = false;
 
-    // Get the registered users from local storage
-    var registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+    toggleButton.addEventListener("click", () => {
+      if (iframeVisible) {
+        iframeContainer.innerHTML = "";
+        iframeContainer.classList.remove("active");
+      } else {
+        const iframeSrc = toggleButton.getAttribute("data-src");
+        iframeContainer.innerHTML = `<iframe src="${iframeSrc}" style="width: 100%; height: 100%; border: none;"></iframe>`;
+        iframeContainer.classList.add("active");
+      }
 
-    // Check if the username and password are valid (exist in the registeredUsers array)
-    const user = registeredUsers.find(u => u.username === username && u.password === password);
-
-    if (user) {
-      // Store the username in a variable called "name"
-      const name = username;
-      alert(`Welcome, ${name}! You are now logged in.`);
-
-      // Redirect to home.html
-      window.location.href = 'home.html';
-    } else {
-      // Display error message
-      document.getElementById('error-message').innerText = 'Incorrect username or password.';
-    }
+      iframeVisible = !iframeVisible;
+    });
   }
+
+  toggleIframe("toggleButton1", "iframeContainer1");
+  toggleIframe("toggleButton2", "iframeContainer2");
+  toggleIframe("toggleButton3", "iframeContainer3");
+  toggleIframe("toggleButton4", "iframeContainer4");
+  toggleIframe("toggleButton5", "iframeContainer5");
+  toggleIframe("toggleButton6", "iframeContainer6");
 </script>
+
 </body>
 </html>
