@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern UI with Dropdown Menus and Sign In</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    width: 400px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown {
+    margin-bottom: 15px;
+  }
+
+  .dropdown label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .dropdown select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    appearance: none; /* Remove default arrow on Firefox */
+    -webkit-appearance: none; /* Remove default arrow on Chrome/Safari */
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Modern UI with Dropdown Menus and Sign In</h2>
+  <form>
+    <div class="dropdown">
+      <label for="dropdown1">Dropdown 1</label>
+      <select id="dropdown1">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+      </select>
+    </div>
+    <!-- Repeat for 14 more dropdowns -->
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="button" onclick="validateSignIn()">Sign In</button>
+
+    <div class="error-message" id="error-message"></div>
+  </form>
+</div>
+
+<script>
+  function validateSignIn() {
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+
+    // Get the registered users from local storage
+    var registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+    // Check if the username and password are valid (exist in the registeredUsers array)
+    const user = registeredUsers.find(u => u.username === username && u.password === password);
+
+    if (user) {
+      // Store the username in a variable called "name"
+      const name = username;
+      alert(`Welcome, ${name}! You are now logged in.`);
+
+      // Redirect to home.html
+      window.location.href = 'home.html';
+    } else {
+      // Display error message
+      document.getElementById('error-message').innerText = 'Incorrect username or password.';
+    }
+  }
+</script>
+</body>
+</html>
